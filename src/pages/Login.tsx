@@ -3,7 +3,6 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useEffect, useState } from 'react';
-import { Feather } from '@expo/vector-icons';
 import { Alert, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -90,7 +89,7 @@ export default function Login({ navigation }: StackScreenProps<any>) {
         <LinearGradient
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 1.0, y: 1.0 }}
-            colors={['#5C2483', '#8A4FD1']}
+            colors={['#031A62', '#00A3FF']}
             style={styles.gradientContainer}
         >
             {isFocused && <StatusBar animated translucent style="light" />}
@@ -114,7 +113,6 @@ export default function Login({ navigation }: StackScreenProps<any>) {
                 />
                 <Spacer size={80} />
                 <View style={styles.inputLabelRow}>
-                    <Feather name="mail" size={16} color="#fff" style={styles.labelIcon} />
                     <Text style={styles.label}>Email</Text>
                     {emailIsInvalid && <Text style={styles.error}>invalid email</Text>}
                 </View>
@@ -125,7 +123,6 @@ export default function Login({ navigation }: StackScreenProps<any>) {
                 />
 
                 <View style={styles.inputLabelRow}>
-                    <Feather name="lock" size={16} color="#fff" style={styles.labelIcon} />
                     <Text style={styles.label}>Password</Text>
                     {passwordIsInvalid && <Text style={styles.error}>invalid password</Text>}
                 </View>
@@ -136,7 +133,7 @@ export default function Login({ navigation }: StackScreenProps<any>) {
                     onEndEditing={isPasswordInvalid}
                 />
                 <Spacer size={80} />
-                <BigButton style={{ marginBottom: 8 }} onPress={handleAuthentication} label="Log in" color="#00A3FF" />
+                <BigButton style={{ marginBottom: 8, borderRadius: 8 }} onPress={handleAuthentication} label="Log in" color="#FF8700" />
                 <Spinner
                     visible={isAuthenticating}
                     textContent={'Authenticating...'}
@@ -174,10 +171,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'baseline',
         marginBottom: 4,
-    },
-
-    labelIcon: {
-        marginRight: 6,
     },
 
     input: {
