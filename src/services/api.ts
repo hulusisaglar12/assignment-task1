@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { getFromCache } from './caching';
 
 const api = axios.create({
     // Before running your 'json-server', get your computer's IP address and
@@ -11,9 +12,27 @@ const api = axios.create({
     //
     // To use `my-json-server`, make sure your `db.json` is located at the repo root.
 
-    baseURL: 'http://0.0.0.0:3333',
+    baseURL: 'http://192.168.1.64:3333',
+});
+
+// `json-server-auth` only enforces write permissions when a routes/rules
+// file is supplied (none is configured in this project yet), but attach the
+// cached access token whenever one is available so requests are already
+// correctly authenticated if/when that protection is added.
+api.interceptors.request.use(async (config) => {
+    try {
+        const accessToken = await getFromCache<string>('accessToken');
+        if (accessToken) {
+            config.headers = { ...config.headers, Authorization: `Bearer ${accessToken}` };
+        }
+    } catch {
+        // No cached token yet (e.g. before login) — proceed unauthenticated.
+    }
+    return config;
 });
 
 export const authenticateUser = (email: string, password: string): Promise<AxiosResponse> => {
     return api.post(`/login`, { email, password });
 };
+
+export default api;

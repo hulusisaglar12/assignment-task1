@@ -36,3 +36,26 @@ When creating your app build or publishing, import your secret values to EAS run
 ```
 eas secret:push
 ```
+
+## Project 1.2 - Event details page
+
+### Features
+- The map loads and refits to the user's location and the upcoming events, and does so again each time the user returns to it.
+- Each event marker turns grey when the team is full and blue when spots are open. Tapping a marker opens the event details screen, passing the event id as a route param.
+- The details screen shows the event's date, time, description, and organizer, and a status box with three states: "Volunteered", "X of Y Volunteer(s) needed", or "Team is full".
+- Call and Text appear only for events the user has joined. "Volunteer" appears only for open events the user hasn't joined. Share appears for open events and for joined events. "Get Directions to Event" is always shown and opens the device's maps app.
+
+### Third-party libraries and bundle size
+Every library below is either required by the assignment or already part of the starter project. Share and Linking are React Native built-ins, so they add no bundle size.
+
+| Library | Why it's used | Bundle impact |
+|---|---|---|
+| `react-native-maps` | Map view, event markers, and fitting the map to coordinates (required by the assignment) | Large native module; unavoidable for the map |
+| `expo-location` | Reads the user's position to include it in the map fit (already in the starter) | Small |
+| `@react-navigation/native`, `@react-navigation/stack` | Navigation between screens and passing route params | Moderate; standard for stack navigation |
+| `axios` | HTTP calls to the json-server API (already in the starter) | Small |
+| `@expo/vector-icons` | Feather icons for the buttons and status box | Only the Feather glyph set is loaded |
+| `expo-splash-screen` | Native splash screen, required by the newer Expo SDK | Small |
+| `react-native-worklets` | Required peer dependency of `react-native-reanimated` | Small |
+
+Upgrading to Expo SDK 57 added `expo-splash-screen`, `@expo/vector-icons` (no longer bundled with Expo), and `react-native-worklets`. No other new libraries were added for this assignment.
