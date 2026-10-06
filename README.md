@@ -72,7 +72,6 @@ Upgrading to Expo SDK 57 added `expo-splash-screen`, `@expo/vector-icons` (no lo
 - **Cache invalidation.** The cached event list can be stale until the next successful fetch. Adding the new event to the cached list right after saving would keep the offline view current.
 - **Compress before upload.** The picker already reduces quality to 50%. Resizing images to a fixed maximum width would further reduce upload time and storage use.
 - **Validate on the server.** Validation only runs in the app. The API should also reject events with missing fields or invalid dates.
-- **Read the API key from an environment variable.** The image upload key is read from `FREEIMAGE_API_KEY`, so it's never committed to the repo.
 
 ### Setup for picture uploads
 Image uploads need a free freeimage.host API key. Sign up at https://freeimage.host and copy your key, then start the app with:

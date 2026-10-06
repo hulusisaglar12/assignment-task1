@@ -20,6 +20,12 @@ type Props = StackScreenProps<RootStackParamList, 'CreateEvent'>;
 
 const ABOUT_MAX_LENGTH = 300;
 
+// Exact size in bytes of the data a base64 string encodes (4 characters per 3 bytes, minus '=' padding).
+const getBase64ByteLength = (base64: string): number => {
+    const padding = base64.endsWith('==') ? 2 : base64.endsWith('=') ? 1 : 0;
+    return (base64.length * 3) / 4 - padding;
+};
+
 interface PictureDetails {
     uri: string;
     name: string;
@@ -75,8 +81,7 @@ export default function CreateEvent({ navigation, route }: Props) {
             setPicture({
                 uri: asset.uri,
                 name: asset.fileName ?? 'image.jpg',
-                // Fall back to the base64 length (about 3/4 of its size in bytes) when the platform omits fileSize.
-                size: asset.fileSize ?? Math.round((asset.base64.length * 3) / 4),
+                size: asset.fileSize ?? getBase64ByteLength(asset.base64),
                 url: getUploadedImageUrl(response),
             });
         } catch (error) {

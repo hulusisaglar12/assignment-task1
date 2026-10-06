@@ -12,7 +12,7 @@ import { getEnvironentVariable } from '../utils';
 // When creating your app build or publishing, do not forget to run 'eas secret:push' command
 // to import your secret values to EAS.
 
-const UPLOAD_URL = 'https://freeimage.host/api/1/upload/';
+const UPLOAD_URL = 'https://freeimage.host/api/1/upload';
 
 export const uploadImage = (imageBase64: string): Promise<AxiosResponse> => {
     const data = new FormData();
