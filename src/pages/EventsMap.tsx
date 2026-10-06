@@ -12,6 +12,7 @@ import * as MapSettings from '../constants/MapSettings';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import mapMarkerImg from '../images/map-marker.png';
 import mapMarkerGreyImg from '../images/map-marker-grey.png';
+import { getFromNetworkFirst } from '../services/caching';
 import { getEvents } from '../services/events';
 import { Event } from '../types/Event';
 import { getEventStatus } from '../utils/eventStatus';
@@ -30,12 +31,13 @@ export default function EventsMap({ navigation }: Props) {
     useEffect(() => {
         if (!isFocused) return;
 
-        getEvents()
+        // Fetch from the API when online and cache the result; fall back to the cached copy when offline.
+        getFromNetworkFirst<Event[]>('events', getEvents())
             .then((allEvents) => {
                 const now = new Date();
                 setEvents(allEvents.filter((event) => new Date(event.dateTime) >= now));
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.log('No events from network or cache:', error));
 
         Location.requestForegroundPermissionsAsync()
             .then(({ status }) => {
@@ -62,9 +64,9 @@ export default function EventsMap({ navigation }: Props) {
         mapViewRef.current?.fitToCoordinates(coordinates, { edgePadding: MapSettings.EDGE_PADDING });
     }, [events, userLocation]);
 
-    // Creating a new event is out of scope for this assignment (event details
-    // page) and will be implemented in a later module.
-    const handleNavigateToCreateEvent = () => {};
+    const handleNavigateToCreateEvent = () => {
+        navigation.navigate('SelectEventLocation');
+    };
 
     const handleNavigateToEventDetails = (event: Event) => {
         navigation.navigate('EventDetails', { id: event.id });

@@ -26,3 +26,5 @@ export const uploadImage = (imageBase64: string): Promise<AxiosResponse> => {
 
     return imageApi.post('/upload', data);
 };
+
+export const getUploadedImageUrl = (response: AxiosResponse): string => response.data.data.url;

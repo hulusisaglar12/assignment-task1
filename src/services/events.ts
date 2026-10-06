@@ -21,3 +21,8 @@ export const joinEvent = async (eventId: string, volunteersIds: string[]): Promi
     const response = await api.patch<Event>(`/events/${eventId}`, { volunteersIds });
     return response.data;
 };
+
+export const createEvent = async (newEvent: Event): Promise<Event> => {
+    const response = await api.post<Event>('/events', newEvent);
+    return response.data;
+};

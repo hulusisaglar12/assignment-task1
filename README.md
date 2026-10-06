@@ -59,3 +59,23 @@ Every library below is either required by the assignment or already part of the 
 | `react-native-worklets` | Required peer dependency of `react-native-reanimated` | Small |
 
 Upgrading to Expo SDK 57 added `expo-splash-screen`, `@expo/vector-icons` (no longer bundled with Expo), and `react-native-worklets`. No other new libraries were added for this assignment.
+
+## Project 1.3 - Create event and data flows
+
+### Data flows
+1. **Consume data:** the map requests `GET /events` on load and every time it regains focus. A successful response is saved to AsyncStorage (`getFromNetworkFirst` in `src/services/caching.ts`). If the request fails, the app loads the last saved copy, so the map still works offline. Past events are hidden before display.
+2. **Collect data:** the user picks a location by tapping the map (`SelectEventLocation`), then fills in the event form (`CreateEvent`). The form includes a camera or photo-library picker, which checks device permissions first.
+3. **Send data:** the picture is uploaded to ImgBB first, and the returned URL is stored with the event. Then the event is saved with `POST /events`, and the app returns to the map, which fetches the list again.
+
+### Recommended improvements
+- **Upload and save in one step.** If the picture upload succeeds but saving the event fails, the picture is left on the image host with no event pointing to it. A server-side endpoint could create the event and upload the image together.
+- **Cache invalidation.** The cached event list can be stale until the next successful fetch. Adding the new event to the cached list right after saving would keep the offline view current.
+- **Compress before upload.** The picker already reduces quality to 50%. Resizing images to a fixed maximum width would further reduce upload time and storage use.
+- **Validate on the server.** Validation only runs in the app. The API should also reject events with missing fields or invalid dates.
+- **Read the API key from an environment variable.** The image upload key is read from `IMGBB_API_KEY`, so it's never committed to the repo.
+
+### Setup for picture uploads
+Image uploads need an ImgBB API key. Create a free key at https://imgbb.com/signup, then start the app with:
+```
+IMGBB_API_KEY="your_key_here" REACT_NATIVE_PACKAGER_HOSTNAME=192.168.1.64 npx expo start -c
+```
