@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { LatLng, Marker } from 'react-native-maps';
 import customMapStyle from '../../map-style.json';
 import * as MapSettings from '../constants/MapSettings';
 import { AuthenticationContext } from '../context/AuthenticationContext';
@@ -83,7 +83,6 @@ export default function EventsMap({ navigation }: Props) {
         <View style={styles.container}>
             <MapView
                 ref={mapViewRef}
-                provider={PROVIDER_GOOGLE}
                 initialRegion={MapSettings.DEFAULT_REGION}
                 style={styles.mapStyle}
                 customMapStyle={customMapStyle}

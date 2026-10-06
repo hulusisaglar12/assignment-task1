@@ -3,7 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Linking, ScrollView, Share, Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import BigButton from '../../components/BigButton';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import mapMarkerImg from '../../images/map-marker.png';
@@ -164,7 +164,6 @@ export default function EventDetails({ route, navigation }: Props) {
 
                     <View style={styles.mapPreview}>
                         <MapView
-                            provider={PROVIDER_GOOGLE}
                             style={{ flex: 1 }}
                             initialRegion={{
                                 latitude: event.position.latitude,

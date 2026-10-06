@@ -3,7 +3,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { LatLng, Marker } from 'react-native-maps';
 import customMapStyle from '../../map-style.json';
 import BigButton from '../components/BigButton';
 import * as MapSettings from '../constants/MapSettings';
@@ -32,7 +32,6 @@ export default function SelectEventLocation({ navigation }: Props) {
             </View>
 
             <MapView
-                provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 initialRegion={MapSettings.DEFAULT_REGION}
                 customMapStyle={customMapStyle}
