@@ -1,30 +1,26 @@
 import axios, { AxiosResponse } from 'axios';
 import { getEnvironentVariable } from '../utils';
 
-// You can use any hosting service of your preference.
-// In this case, we will use ImgBB API: https://api.imgbb.com/.
+// Pictures are uploaded to freeimage.host, a free image hosting service
+// (https://freeimage.host/page/api). The upload returns a public URL that is
+// stored with the event.
 //
-// Sign up for free at https://imgbb.com/signup
-// Get your API key and add it to the .env file in your root folder.
-//
-// To run the app in your local environment, you will need to set the IMGBB_API_KEY
-// when starting the app using:
-// 'IMGBB_API_KEY="insert_your_api_key_here" npx expo start'
+// Get a free API key by signing up at https://freeimage.host, then set
+// FREEIMAGE_API_KEY when starting the app:
+// 'FREEIMAGE_API_KEY="insert_your_api_key_here" npx expo start'
 //
 // When creating your app build or publishing, do not forget to run 'eas secret:push' command
 // to import your secret values to EAS.
 
-const imageApi = axios.create({
-    baseURL: 'https://api.imgbb.com/1',
-    headers: { 'Content-Type': 'multipart/form-data' },
-    params: { key: getEnvironentVariable('IMGBB_API_KEY') },
-});
+const UPLOAD_URL = 'https://freeimage.host/api/1/upload/';
 
 export const uploadImage = (imageBase64: string): Promise<AxiosResponse> => {
     const data = new FormData();
-    data.append('image', imageBase64);
+    data.append('key', getEnvironentVariable('FREEIMAGE_API_KEY') as string);
+    data.append('action', 'upload');
+    data.append('source', imageBase64);
 
-    return imageApi.post('/upload', data);
+    return axios.post(UPLOAD_URL, data);
 };
 
-export const getUploadedImageUrl = (response: AxiosResponse): string => response.data.data.url;
+export const getUploadedImageUrl = (response: AxiosResponse): string => response.data.image.url;
