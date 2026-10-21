@@ -26,7 +26,7 @@ api.interceptors.request.use(async (config) => {
             config.headers = { ...config.headers, Authorization: `Bearer ${accessToken}` };
         }
     } catch {
-        // No cached token yet (e.g. before login) — proceed unauthenticated.
+        // No cached token yet (e.g. before login), so proceed unauthenticated.
     }
     return config;
 });
