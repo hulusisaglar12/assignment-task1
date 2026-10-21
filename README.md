@@ -76,5 +76,5 @@ Upgrading to Expo SDK 57 added `expo-splash-screen`, `@expo/vector-icons` (no lo
 ### Setup for picture uploads
 Image uploads need a free freeimage.host API key. Sign up at https://freeimage.host and copy your key, then start the app with:
 ```
-FREEIMAGE_API_KEY="your_key_here" REACT_NATIVE_PACKAGER_HOSTNAME=192.168.1.64 npx expo start -c
+FREEIMAGE_API_KEY="your_key_here" REACT_NATIVE_PACKAGER_HOSTNAME=your_ip_address_here npx expo start -c
 ```
